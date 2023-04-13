@@ -31,6 +31,7 @@ const destinations = store.destinations
 <style scoped>
 h1 {
   text-align: center;
+  margin: 50px 0 30px;
 }
 .home {
   max-width: 1400px;

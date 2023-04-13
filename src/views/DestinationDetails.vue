@@ -1,5 +1,6 @@
 <script setup>
 import { useRoute, RouterLink, RouterView } from 'vue-router';
+import GoBack from '../components/GoBack.vue';
 import { computed } from 'vue';
 import store from "@/store.js"
 
@@ -16,6 +17,8 @@ const destination = computed(() => store.destinations.find(
 </script>
 
 <template>
+  <div>
+  <GoBack />
   <section class="destination">
     <h1>{{ destination.name }}</h1>
     <div class="destination-details">
@@ -39,11 +42,23 @@ const destination = computed(() => store.destinations.find(
       </div>
     </div>
 
-    <RouterView :key="route.path" />
+    
+    <RouterView :key="route.path" v-slot="{ Component, route }">
+      <Transition name="fade">
+        <component :is="Component" :key="route.path" />
+      </Transition>
+    </RouterView>
   </section>
+  </div>
 </template>
 
 <style scoped>
+h1{
+  margin: 30px 0 30px;
+}
+h2 {
+  margin-bottom: 20px;
+}
 img {
   max-width: 600px;
   height: auto;
@@ -83,5 +98,15 @@ p {
   font-size: 25px;
   font-weight: bold;
   text-decoration: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
